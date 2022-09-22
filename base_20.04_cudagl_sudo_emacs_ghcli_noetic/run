@@ -1,0 +1,1 @@
+docker run -it --name ros-noetic-cnt --user user --env="DISPLAY" --net=host --device /dev/dri/ ros-noetic
