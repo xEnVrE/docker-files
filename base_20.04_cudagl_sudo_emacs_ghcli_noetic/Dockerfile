@@ -57,6 +57,13 @@ RUN echo "(setq-default indent-tabs-mode nil)" >> /home/user/.emacs.el && \
     echo "(custom-set-variables '(custom-enabled-themes '(tango-dark)))" >> /home/user/.emacs.el && \
     echo "(custom-set-faces)" >> /home/user/.emacs.elx
 
+# Setup ROS
+RUN rosdep update
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN mkdir -p /home/user/ws/src
+WORKDIR /home/user/ws/
+RUN source /opt/ros/noetic/setup.bash && catkin build
+
 # Setup Gazebo11
 RUN echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc
 
