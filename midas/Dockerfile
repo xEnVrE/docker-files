@@ -15,7 +15,7 @@ ENV LANG=en_US.UTF-8
 
 # Install essentials
 RUN apt update && \
-    apt install --no-install-recommends -y -qq apt-utils build-essential ca-certificates cmake cmake-curses-gui curl emacs-nox git glmark2 gnupg2 htop iputils-ping jq libopenblas-dev lsb-release mesa-utils nano psmisc python3-dev python3-virtualenv sudo unzip vim wget zip && \
+    apt install --no-install-recommends -y -qq apt-utils build-essential ca-certificates cmake cmake-curses-gui curl emacs-nox git glmark2 gnupg2 htop iputils-ping jq libopenblas-dev lsb-release mesa-utils nano psmisc python3-dev python3-virtualenv sudo unzip vim wget zip libxrender1 && \
     rm -rf /var/lib/apt/lists/*
 
 # Install GitHub cli
@@ -50,7 +50,7 @@ WORKDIR /home/user
 RUN virtualenv env && \
     . env/bin/activate && \
     pip install --upgrade pip && \
-    pip install ffmpeg gdown gitpython GPUtil hydra-core matplotlib ninja numpy omegaconf opencv-python scipy scikit-learn tensorboard && \
+    pip install dill ffmpeg gdown gitpython GPUtil hydra-core matplotlib ninja numpy omegaconf opencv-python open3d potpourri3d pyvista scipy scikit-learn tensorboard theseus && \
 # torch
     pip install torch==1.12.0+cu113 torchvision==0.13.0+cu113 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu113
 
@@ -64,6 +64,12 @@ RUN virtualenv env && \
 #     # cd YCB-Slide && chmod +x download_dataset.sh && ./download_dataset.sh && \
 #     # cd /home/user/MidasTouch && \
 #     # chmod +x download_assets.sh && ./download_assets.sh && \
+#     pip install -e .
+
+# TACTO fork
+# WORKDIR /home/user
+# RUN . env/bin/activate && \
+#     git clone https://github.com/suddhu/tacto.git && cd tacto && \
 #     pip install -e .
 
 # Launch bash from /home/user
