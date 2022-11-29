@@ -46,21 +46,25 @@ RUN echo "(setq-default indent-tabs-mode nil)" >> /home/user/.emacs.el && \
     echo "(custom-set-faces)" >> /home/user/.emacs.elx
 
 # virtualenv
+WORKDIR /home/user
 RUN virtualenv env && \
     . env/bin/activate && \
     pip install --upgrade pip && \
     pip install ffmpeg gdown gitpython GPUtil hydra-core matplotlib ninja numpy omegaconf opencv-python scipy scikit-learn tensorboard && \
 # torch
-    pip install torch==1.12.0+cu113 torchvision==0.13.0+cu113 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu113 && \
+    pip install torch==1.12.0+cu113 torchvision==0.13.0+cu113 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu113
+
 # MinkowskiEngine
-    cd /home/user && git clone https://github.com/NVIDIA/MinkowskiEngine && cd MinkowskiEngine && \
-    export CXX=c++; export CUDA_HOME=/usr/local/cuda-11.3; python setup.py install --blas=openblas --force_cuda && \
-    cd /home/user && git clone https://github.com/facebookresearch/MidasTouch && cd MidasTouch && \
-    git submodule update --init --recursive && \
-    # cd YCB-Slide && chmod +x download_dataset.sh && ./download_dataset.sh && \
-    # cd /home/user/MidasTouch && \
-    # chmod +x download_assets.sh && ./download_assets.sh && \
-    pip install -e .
+# WORKDIR /home/user
+# RUN . env/bin/activate && \
+#     git clone https://github.com/NVIDIA/MinkowskiEngine && cd MinkowskiEngine && \
+#     export CXX=c++ && export CUDA_HOME=/usr/local/cuda-11.3 && python setup.py install --blas=openblas --force_cuda && \
+#     cd /home/user && git clone https://github.com/facebookresearch/MidasTouch && cd MidasTouch && \
+#     git submodule update --init --recursive && \
+#     # cd YCB-Slide && chmod +x download_dataset.sh && ./download_dataset.sh && \
+#     # cd /home/user/MidasTouch && \
+#     # chmod +x download_assets.sh && ./download_assets.sh && \
+#     pip install -e .
 
 # Launch bash from /home/user
 WORKDIR /home/user
